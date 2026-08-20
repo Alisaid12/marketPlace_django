@@ -37,4 +37,4 @@ def singup(request):
 def logout_user(request):
     logout(request)
     messages.success(request, "You have been logged out.")
-    return redirect('core:index')
+    return redirect('core:login')
