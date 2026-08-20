@@ -1,78 +1,143 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
     <title>{% block title %} {% endblock %} | Puddle</title>
     <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100%;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100%;
+      }
 
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
 
-        nav {
-            flex-shrink: 0;
-        }
+      nav {
+        flex-shrink: 0;
+      }
 
-        main {
-            flex: 1;
-        }
+      main {
+        flex: 1;
+      }
 
-        footer {
-            flex-shrink: 0;
-        }
+      footer {
+        flex-shrink: 0;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
-        <a href='/' class="text-xl font-semiblod">Puddle</a>
+  <body>
+    <nav
+      class="py-6 px-6 flex justify-between items-center border-b border-gray-200"
+    >
+      <a href="/" class="text-xl font-semibold">Puddle</a>
 
-        <div class="space-x-6">
-            <a href='#' class="text-xl font-semiblod hover:text-gray-500">New Item</a>
-            <a href='#' class="text-xl font-semiblod hover:text-gray-500">Browse</a>
-            <a href="#" class="px-6 py-3 text-lg font-semiblod bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sing
-                up</a>
-            <a href="#" class="px-6 py-3 text-lg font-semiblod bg-gray-500 text-white rounded-xl hover:bg-teal-700">Log
-                in</a>
+      <div class="space-x-6">
+        <a href="{% url 'item:new' %}" class="text-xl font-semibold hover:text-gray-500"
+          >New Item</a
+        >
+        <a href="#" class="text-xl font-semibold hover:text-gray-500">Browse</a>
 
-        </div>
+        {% if request.user.is_authenticated %}
+        <a
+          href="#"
+          class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700"
+          >Inbox</a
+        >
+        <a
+          href="#"
+          class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-teal-700"
+          >Dashboard</a
+        >
+        <a
+          href="{% url 'core:logout' %}"
+          class="px-6 py-3 text-lg font-semibold bg-white text-black border border-gray-400 rounded-xl hover:bg-gray-700 hover:text-white transition duration-1000 ease-in-out"
+        >
+          Log Out
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </a>
+        {% else %}
+        <a
+          href="{% url 'core:singup' %}"
+          class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700"
+          >Sing up</a
+        >
+        <a
+          href="{% url 'core:login' %}"
+          class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-teal-700"
+          >Log in</a
+        >
+        {% endif %}
+      </div>
     </nav>
     <main class="px-6 py-6">
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flex items-center justify-between mb-4 p-4 rounded-xl bg-green-100 text-green-800">
+                    <span>{{ message }}</span>
 
-        {% block content %}
-
-        {% endblock %}
-
+                    <button
+                        type="button"
+                        onclick="this.parentElement.remove()"
+                        class="ml-4 text-green-800 hover:text-green-950 text-xl font-bold"
+                        aria-label="Close"
+                    >
+                        &times;
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% block content %} {% endblock %}
     </main>
 
     <footer class="py-6 px-6 flex justify-between bg-gray-800">
-        <div class="w2/3 pr-10">
-            <h3 class="mb-5 font-semibold text-gray-400">About</h3>
-            <p class="text-lg text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, voluptatum?
-            </p>
-        </div>
-        <div class="w-1/3 pr-10">
-            <h3 class="mb-5 font-semibold text-gray-400">Menu</h3>
+      <div class="w2/3 pr-10">
+        <h3 class="mb-5 font-semibold text-gray-400">About</h3>
+        <p class="text-lg text-gray-500">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque,
+          voluptatum?
+        </p>
+      </div>
+      <div class="w-1/3 pr-10">
+        <h3 class="mb-5 font-semibold text-gray-400">Menu</h3>
 
-            <ul class="space-y-2">
-                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">About</a></li>
-                <li><a href="{% url 'contact' %}" class="text-lg text-teal-500 hover:text-teal-700">Contact</a></li>
-                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Privacy </a></li>
-                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Terms</a></li>
-            </ul>
-        </div>
+        <ul class="space-y-2">
+          <li>
+            <a href="#" class="text-lg text-teal-500 hover:text-teal-700"
+              >About</a
+            >
+          </li>
+          <li>
+            <a
+              href="{% url 'core:contact' %}"
+              class="text-lg text-teal-500 hover:text-teal-700"
+              >Contact</a
+            >
+          </li>
+          <li>
+            <a href="#" class="text-lg text-teal-500 hover:text-teal-700"
+              >Privacy
+            </a>
+          </li>
+          <li>
+            <a href="#" class="text-lg text-teal-500 hover:text-teal-700"
+              >Terms</a
+            >
+          </li>
+        </ul>
+      </div>
     </footer>
-</body>
-
+  </body>
 </html>

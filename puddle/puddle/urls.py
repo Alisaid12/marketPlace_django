@@ -16,16 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-import core.views as core
-
 from django.conf import settings
 from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('',core.index,name='index'),
-    path('item',include('item.urls')),
-    path('contact/',core.contact,name='contact'),
+    path('',include('core.urls')),
+    path('item/',include('item.urls')),
     path('admin/', admin.site.urls),
 ]
 
