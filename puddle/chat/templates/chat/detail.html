@@ -1,0 +1,66 @@
+{% extends "core/base.html" %}
+{% block  title %} Chat{% endblock   %}
+{% block content %}
+<div class="w-1/2 my-6 mx-auto p-6 bg-gray-50 rounded-xl">
+    <h1 class="mb-6 text-3xl">Chat</h1>
+
+    <div class="space-y-6">
+        
+        {% comment %} {% for message in chat.messages.all %}
+            <div class="p-6 flex {%if message.created_by == request.user %} bg-teal-100 {% else %} bg-blue-100 {% endif %} rounded-xl">
+                <div>
+                    <p class="mb-2"><strong>{{message.created_by.username}}</strong> | {{message.created_at}} </p>
+                    <p>{{message.content}} </p>
+                </div>
+            </div>
+        
+    
+        {% endfor %} {% endcomment %}
+        {% for message in chat.messages.all %}
+            <div class="relative flex
+                {% if message.created_by == request.user %}
+                    justify-end
+                {% else %}
+                    justify-start
+                {% endif %}
+            ">
+
+                <div class="relative max-w-[75%] px-5 py-3 rounded-2xl
+                    {% if message.created_by == request.user %}
+                        bg-teal-100 rounded-br-none
+                    {% else %}
+                        bg-blue-100 rounded-bl-none
+                    {% endif %}
+                ">
+
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="font-semibold text-sm text-gray-700">
+                            {{ message.created_by.username }}
+                        </span>
+
+                        <span class="text-xs text-gray-400">
+                            {{ message.created_at|date:"H:i" }}
+                        </span>
+                    </div>
+
+                    <p class="text-gray-800 break-words">
+                        {{ message.content }}
+                    </p>
+
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+
+    <form method='post' class="mt-6 flex items-end justify-between gap-2" >
+        {% csrf_token %}
+
+        {{ form.content }}
+
+        <button class="mb-3 py-2 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Send</button>
+    </form>
+
+</div>
+{% endblock %}

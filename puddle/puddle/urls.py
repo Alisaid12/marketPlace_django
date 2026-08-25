@@ -24,6 +24,7 @@ urlpatterns = [
     path('',include('core.urls')),
     path('item/',include('item.urls')),
     path('dashboard/',include('dashboard.urls')),
+    path('chat/',include('chat.urls')),
     path('admin/', admin.site.urls),
 ]
 
