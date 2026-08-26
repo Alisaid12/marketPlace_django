@@ -5,9 +5,31 @@
     height: 100%;}
 </style>
 {% block content %}
-    <div class="mt-2 px-4 py-4 bg-gray-100 rounded-xl">
+
+    {% comment %} <div class="mt-2 px-4 py-4 bg-gray-100 rounded-xl">
         <h1 class="text-lg text-gray-500">Welcome back, <strong>{{request.user|capfirst}}</strong></h1>
+    </div> {% endcomment %}
+    <div class="mt-4 px-6 py-5 bg-white border border-gray-100 rounded-2xl shadow-sm">
+    <div class="flex items-center justify-between">
+        <div>
+            
+
+            <h1 class="mt-1 text-2xl font-bold text-gray-800">
+                Welcome back, 
+                <span class="text-indigo-600">{{ request.user|capfirst }}</span> 👋
+            </h1>
+
+            <p class="mt-1 text-sm text-gray-500">
+                Here's what's happening with your store today.
+            </p>
+        </div>
+
+        <div class="hidden sm:flex items-center justify-center w-12 h-12 bg-indigo-50 rounded-full">
+            <a href="{% url 'dashboard:index' %}"><i class="fa-solid fa-store text-indigo-600 text-xl"></i></a>
+        </div>
     </div>
+</div>
+
     <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
         <h2 class="mb-12 text-2xl text-center">Newset items</h2>
 

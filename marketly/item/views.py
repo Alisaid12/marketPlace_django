@@ -77,7 +77,7 @@ def edit(request,pk):
 def delete(request,pk):
     item = get_object_or_404(Item,pk=pk,created_by=request.user)
     item.delete()
-    messages.success(request,"The Items deleted succeffuly...")
+    messages.success(request,"The Item deleted succeffuly...")
     return redirect('dashboard:index')
 
 
