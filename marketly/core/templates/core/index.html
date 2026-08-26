@@ -5,6 +5,9 @@
     height: 100%;}
 </style>
 {% block content %}
+    <div class="mt-2 px-4 py-4 bg-gray-100 rounded-xl">
+        <h1 class="text-lg text-gray-500">Welcome back, <strong>{{request.user|capfirst}}</strong></h1>
+    </div>
     <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
         <h2 class="mb-12 text-2xl text-center">Newset items</h2>
 
